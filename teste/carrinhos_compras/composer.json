@@ -1,0 +1,15 @@
+{
+    "name": "juninho/carrinhos_compras",
+    "autoload": {
+        "psr-4": {
+            "Juninho\\CarrinhosCompras\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Patrick",
+            "email": "patrick.grilanda26@gmail.com"
+        }
+    ],
+    "require": {}
+}

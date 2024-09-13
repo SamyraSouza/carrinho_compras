@@ -1,0 +1,36 @@
+<?php
+
+namespace Juninho\CarrinhosCompras;
+
+class Order
+{
+    protected $cart_id = 0;
+    protected $total = 0;
+    protected $user = "";
+
+    public function __construct($cart_id, $total, $user)
+    {
+        $this->cart_id = $cart_id;
+        $this->total = $total;
+        $this->user = $user;
+    }
+    
+    public function getCart(){
+        return $this->cart_id;
+    }
+    public function getValue(){
+        return $this->total;
+    }
+    public function getUser(){
+        return $this->user;
+    }
+    public function setCart($cart_id){
+        $this->cart_id = $cart_id;
+    }
+    public function setValue($total){
+        $this->total = $total;
+    }
+    public function setUser($user){
+        $this->user = $user;
+    }
+}
