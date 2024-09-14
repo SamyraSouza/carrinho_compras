@@ -4,8 +4,9 @@
 * [x] Criação de atributos e métodos
 * [X] Criação de getters e setters
 * [ ] Manipulação de arrays básico
-* [ ] Conexão com banco de dados
-* [ ] Herança
+* [X] Conexão com banco de dados
+* [X] Tratamento de exceções
+* [X] Herança
 * [X] Encapsulamento
 * [ ] Polimorfismo
 * [ ] Interfaces

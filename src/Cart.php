@@ -3,7 +3,7 @@
 namespace Juninho\CarrinhosCompras;
 use Juninho\CarrinhosCompras\Products;
 
-class Cart
+class Cart extends Model
 {
     protected $products = [];
     protected $id;

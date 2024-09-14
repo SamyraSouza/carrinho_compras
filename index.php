@@ -3,8 +3,11 @@
 require './vendor/autoload.php';
 
 use Juninho\CarrinhosCompras\Cart;
+use Juninho\CarrinhosCompras\core\Database;
 use Juninho\CarrinhosCompras\Products;
-use Juninho\CarrinhosCompras\Order;
+
+    $database = new Database();
+    $database->getConnection();
 
     $camiseta= new Products("camiseta","algodao", 20);
 
@@ -17,7 +20,6 @@ use Juninho\CarrinhosCompras\Order;
     $cart->addProducts($camiseta);
     $cart->addProducts($shorts);
     $cart->addProducts($caneta);
-
 
     $cart->removeProduct($shorts);
 

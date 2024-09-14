@@ -2,8 +2,8 @@
 
 namespace Juninho\CarrinhosCompras;
 
-class Products{
-    
+class Products extends Model
+{
     protected $name = "";
     protected $description = "";
     protected $price = 0;
