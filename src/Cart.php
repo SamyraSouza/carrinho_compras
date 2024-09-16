@@ -6,14 +6,8 @@ use Juninho\CarrinhosCompras\Products;
 class Cart extends Model
 {
     protected $products = [];
-    protected $id;
     protected $status;
     
-    public function __construct($id = 1)
-    {
-        $this->id = $id;
-        $this->status = "Aberto";
-    }
     public function getProducts(){
         return $this->products;
     }
@@ -32,12 +26,10 @@ class Cart extends Model
     public function addProducts($product){
         $this->products[] = $product;
     }
-    public function removeProduct($product){
-  
+    public function removeProduct($product){ 
         $delete = array_filter($this->products, function($filter_product) use ($product){
             return $filter_product->id != $product->id;
         });
-
         $this->products = array_values($delete);
     }
 }

@@ -6,25 +6,16 @@ use Juninho\CarrinhosCompras\Cart;
 use Juninho\CarrinhosCompras\core\Database;
 use Juninho\CarrinhosCompras\Products;
 
-    $database = new Database();
-    $database->getConnection();
+$camiseta = new Products();
+$camiseta->setname('camiseta');
+$camiseta->setdescription('algodão');
+$camiseta->setprice(10);
 
-    $camiseta= new Products("camiseta","algodao", 20);
-
-    $shorts = new Products("shorts", "jeans", 20, 2);
-
-    $caneta = new Products("caneta", "preta", 2, 3);
-
-    $cart = new Cart(2);
-
-    $cart->addProducts($camiseta);
-    $cart->addProducts($shorts);
-    $cart->addProducts($caneta);
-
-    $cart->removeProduct($shorts);
-
-echo '<pre>';
-    print_r($cart);
-echo '</pre>';
-
+try{
+$camiseta->initConnection();
+$camiseta->save();
+print_r($camiseta->all());
+}catch(Exception $exception){
+    echo $exception->getMessage();
+}
 

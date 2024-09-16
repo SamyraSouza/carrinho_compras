@@ -8,12 +8,6 @@ class Order extends Model
     protected $total = 0;
     protected $user = "";
 
-    public function __construct($cart_id, $total, $user)
-    {
-        $this->cart_id = $cart_id;
-        $this->total = $total;
-        $this->user = $user;
-    }
     
     public function getCart(){
         return $this->cart_id;

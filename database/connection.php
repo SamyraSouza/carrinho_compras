@@ -12,7 +12,5 @@ try{
         die("Falha na conexão: " . $mysqli->connect_error);
     }
 }catch(Exception $exception){
-
     echo $exception->getMessage();
-
 }

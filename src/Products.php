@@ -7,15 +7,9 @@ class Products extends Model
     protected $name = "";
     protected $description = "";
     protected $price = 0;
-    public $id;
+    protected $table = 'products';
+    protected $fillable = ['name', 'description', 'price'];
 
-    public function __construct($name, $description, $price, $id = 1)
-    {
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-        $this->id = $id;
-    }
 
    public function getname(){
     return $this->name;
