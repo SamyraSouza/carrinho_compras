@@ -6,7 +6,8 @@ use Juninho\CarrinhosCompras\Products;
 class Cart extends Model
 {
     protected $products = [];
-    protected $status;
+    protected $status = "Aberto";
+    protected $table = "cart";
     
     public function getProducts(){
         return $this->products;

@@ -5,17 +5,17 @@ require './vendor/autoload.php';
 use Juninho\CarrinhosCompras\Cart;
 use Juninho\CarrinhosCompras\core\Database;
 use Juninho\CarrinhosCompras\Products;
+use Juninho\CarrinhosCompras\services\CartService;
+use Juninho\CarrinhosCompras\services\ProductService;
 
-$camiseta = new Products();
-$camiseta->setname('camiseta');
-$camiseta->setdescription('algodão');
-$camiseta->setprice(10);
 
-try{
-$camiseta->initConnection();
-$camiseta->save();
-print_r($camiseta->all());
-}catch(Exception $exception){
+
+try {
+    $cart = new CartService();
+    $products = $cart->getProducts(1);
+    echo "<pre>";
+    print_r($products);
+    echo "</pre>";
+} catch (Exception $exception) {
     echo $exception->getMessage();
 }
-

@@ -7,6 +7,7 @@ class Order extends Model
     protected $cart_id = 0;
     protected $total = 0;
     protected $user = "";
+    protected $table = "sales_order";
 
     
     public function getCart(){
