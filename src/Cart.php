@@ -8,6 +8,7 @@ class Cart extends Model
     protected $products = [];
     protected $status = "Aberto";
     protected $table = "cart";
+    protected $fillable = ["status"];
     
     public function getProducts(){
         return $this->products;

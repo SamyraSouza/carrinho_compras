@@ -2,6 +2,7 @@
 
 namespace Juninho\CarrinhosCompras\services;
 
+use Exception;
 use Juninho\CarrinhosCompras\Cart;
 use Juninho\CarrinhosCompras\CartProducts;
 use Juninho\CarrinhosCompras\Products;
@@ -27,6 +28,37 @@ class CartService
         return $cart_product;
     }
 
+    public function removeFromCart($product_id, $cart_id){
+        $product = new CartProducts();
+        $product->initConnection();
+        $cart_product = $product->where(["product_id" => $product_id, "cart_id" => $cart_id]);
+        $product->setId($cart_product[0]["id"]);
+        $product->delete();
+        $product->closeConnection();
+    }
+
+    public function closeCart($id){
+        $cart = new Cart();
+        $cart->initConnection();
+        $cart->find($id);
+        $cart->setStatus("Fechado");
+        $closed = $cart->save();
+        if($closed){
+            $service = new OrderService();
+            $service->updateOrderSituation($cart->getId());
+        }else{
+            throw new Exception("Erro ao fechar carrinho");
+        }
+    }
+
+    public function openCart($id){
+        $cart = new Cart();
+        $cart->initConnection();
+        $cart->find($id);
+        $cart->setStatus("Aberto");
+        $cart->save();
+    }
+
     protected function create(){
         $cart = new Cart();
         $cart->initConnection();
@@ -37,10 +69,17 @@ class CartService
     }
 
     public function read(){
-        $cart =  new Cart();
-        $cart->initConnection();
-        $cart->all();
-        $cart->closeConnection();
+        $carts =  new Cart();
+        $carts->initConnection();
+        $carts_with_products = [];
+        foreach ($carts->all() as $cart) {
+            $products = $this->getProducts($cart["id"]);
+            $cart["products"] = $products;
+            $carts_with_products[] = $cart;
+        
+        }
+        $carts->closeConnection();
+        return $carts_with_products;
     }
 
     public function getProducts($cart_id){

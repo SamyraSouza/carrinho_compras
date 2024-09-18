@@ -8,6 +8,7 @@ class Order extends Model
     protected $total = 0;
     protected $user = "";
     protected $table = "sales_order";
+    protected $fillable = ["cart_id", "total"];
 
     
     public function getCart(){

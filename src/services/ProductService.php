@@ -15,15 +15,18 @@ class ProductService
         $product->setdescription($description);
         $product->setprice($price);
         $product->save();
+        $product->last();
         $product->closeConnection();
+        return $product;
     }
 
     public function read()
     {
         $product = new Products();
         $product->initConnection();
-        $product->all();
+        $products = $product->all();
         $product->closeConnection();
+        return $products;
     }
 
     public function deletes($id)

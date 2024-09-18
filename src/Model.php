@@ -20,25 +20,24 @@ class Model
         if (!$this->getTable()) throw new Exception("Não há uma tabela existente.");
         $this->connection = new Database();
     }
+    
     private function insert($table, $columns, $values)
     {
         $query = ('insert into ' . $table . ' (' . implode(",", $columns) . ') values (' . implode(",", $values) . ')');
+
         $result = mysqli_query($this->connection->getConnection(), $query);
-        $result = mysqli_fetch_assoc($result);
+
         return $result;
     }
 
     private function update($table, $columns, $values)
     {
-        // $columns = [name, description, price]
-        // $values = [caneta, azul, 12.1]
-        // name = caneta, description = azul, price = 12.1
+        $set = [];
         foreach ($columns as $key => $column) {
             $set[] = " " . $column . " = " . $values[$key] . "";
         }
 
         $query = ('update ' . $table . ' set ' . implode(',', $set) . ' where id=' . $this->id());
-        echo $query;
         $result = mysqli_query($this->connection->getConnection(), $query);
         return $result ? true : false;
     }
@@ -54,11 +53,11 @@ class Model
         }, $columns);
 
         if (!$this->id()) {
-            $product = $this->insert($table, $columns, $values);
-            $this->id = $product["id"];
+            return $this->insert($table, $columns, $values);
         } else {
-            $this->update($table, $columns, $values);
+            return $this->update($table, $columns, $values);
         }
+
     }
 
     public function find($id)
@@ -130,5 +129,24 @@ class Model
     public function closeConnection()
     {
         $this->connection = null;
+    }
+
+    public function first(){
+        if (!$this->connection instanceof Database) throw new Exception("Inicie a conexão com o banco de dados");
+        $query = ("select * from ". $this->getTable()." order by id asc limit 1");
+        $result = mysqli_query($this->connection->getConnection(), $query);
+        $result = mysqli_fetch_assoc($result);
+        foreach ($result as $key => $value) {
+            $this->$key = $value;
+        }
+    }   
+    public function last(){
+        if (!$this->connection instanceof Database) throw new Exception("Inicie a conexão com o banco de dados");
+        $query = ("select * from ". $this->getTable()." order by id desc limit 1");
+        $result = mysqli_query($this->connection->getConnection(), $query);
+        $result = mysqli_fetch_assoc($result);
+        foreach ($result as $key => $value) {
+            $this->$key = $value;
+        }
     }
 }
