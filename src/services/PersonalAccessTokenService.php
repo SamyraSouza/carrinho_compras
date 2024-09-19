@@ -14,11 +14,7 @@ class PersonalAccessTokenService
         $access_token->setToken($token);
         $access_token->setUserId($user_id);
         $access_token->setExpiredAt(
-            date('Y-m-d H:i:s', 
-                strtotime(
-                " +2 hours"
-                )
-            )
+            $this->getExpiredAt()
         );
         $saved = $access_token->save();
         if($saved){
@@ -27,5 +23,16 @@ class PersonalAccessTokenService
             throw new Exception("Não foi possível autenticar");
         }
         $access_token->closeConnection();
+    }
+
+    protected function getExpiredAt(){
+        $expired_at = null;
+        $expired_at = date('Y-m-d H:i:s', 
+        strtotime(
+             date('Y-m-d H:i:s').
+        " +120 minutes"
+        )
+        );
+        return $expired_at;
     }
 }

@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Juninho\\CarrinhosCompras\\' => array($baseDir . '/src'),
+    'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
 );

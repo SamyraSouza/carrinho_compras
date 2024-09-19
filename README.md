@@ -11,4 +11,5 @@
 * [X] Polimorfismo
 * [ ] Interfaces
 * [X] Traits
+* [ ] Consumo de bibliotecas externas
 

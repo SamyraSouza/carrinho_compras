@@ -2,6 +2,7 @@
 
 namespace Juninho\CarrinhosCompras\services;
 
+use Exception;
 use Juninho\CarrinhosCompras\User;
 
 class UserService
@@ -9,8 +10,18 @@ class UserService
     public function read($id){
         $user = new User();
         $user->initConnection();
-        $user->find($id);
+        $this->verifyUser($id);
+        return $user->where(["id" => $id])[0];
         $user->closeConnection();
+       
+    }
+
+    public function verifyUser($id){
+        $user = new User();
+        $user->initConnection();
+        if($user->where(["id" => $id]) == null){
+            throw new Exception("Usuário não existe");
+        }
     }
  
     public function update($id, $data){
@@ -38,7 +49,7 @@ class UserService
         $user->save();
         $user->closeConnection();
     }
-    //apagar conta
+    
     public function remove($id){
         $user = new User();
         $user->initConnection();

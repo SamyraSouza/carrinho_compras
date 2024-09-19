@@ -14,9 +14,9 @@ class CartService
             $cart_product =  new CartProducts();
             $cart_product->initConnection();
             $cart_product->setProductId($product_id);
-            $cart_id->setCartId($cart_id);
-            $cart_id->save();
-            $cart_id->closeConnection();
+            $cart_product->setCartId($cart_id);
+            $cart_product->save();
+            $cart_product->closeConnection();
         }else{
             $cart = $this->create();
             $cart_product =  new CartProducts();
@@ -82,6 +82,17 @@ class CartService
         return $carts_with_products;
     }
 
+    public function readOneCart($id){
+        $cart =  new Cart();
+        $cart->initConnection();
+        $cart->find($id);
+        $products = $this->getProducts($id);
+        foreach($products as $product){
+            $cart->addProducts($product);
+        }
+        $cart->closeConnection();
+        return $cart;
+    }
     public function getProducts($cart_id){
         $product = new CartProducts();
         $product->initConnection();
