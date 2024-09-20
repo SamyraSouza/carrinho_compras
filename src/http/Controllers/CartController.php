@@ -1,12 +1,13 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\http\Controllers;
+namespace App\http\Controllers;
 
 use Exception;
-use Juninho\CarrinhosCompras\services\CartService;
+use App\services\CartService;
 
-class CartController
+class CartController extends Controller
 {
+
     protected $service;
 
     public function __construct()
@@ -17,24 +18,51 @@ class CartController
     public function addProduct($params, $request){
         try{
             $add_product = $this->service->addProduct($request["product_id"], $request["cart_id"]);
-            echo "Produto adicionado ao carrinho com sucesso!";
+            $this->respondsWith(200, "Produto adicionado ao carrinho com sucesso"); 
         }catch(Exception $exception){
-            echo $exception->getMessage();
+            $this->respondsWith(400, "Não foi possível adicionar o produto ao carrinho"); 
         }
     }
 
     public function getCart($params){
         try{
             $cart = $this->service->readOneCart($params["id"]);
-            echo json_encode($cart);
+            $this->respondsWith(200, "Carrinho localizado", ["cart" => $cart->toArray()]); 
         }catch(Exception $exception){
-            echo $exception->getMessage();
+            $this->respondsWith(404, "Carrinho não encontrado"); 
         }
     }
 
-    // public function getCarts($params){
-    //     try{
-    //         $cart = $this->service->readOneCart($params["id"]);
-    //     }
-    // }
+    public function getCarts($params){
+        try{
+            $carts = $this->service->read();
+            $carts = array_map(function($cart){
+               foreach($cart["products"] as $key => $product){
+                $cart["products"][$key] = $product->toArray();
+               }
+               return $cart;
+            }, $carts);
+            $this->respondsWith(200, "Carrinhos localizados", ["cart" => $carts]); 
+        }catch(Exception $excepiton){
+            $this->respondsWith(404, "Carrinhos não localizados"); 
+        }
+    }
+
+    public function open($params){
+        try{
+            $cart = $this->service->openCart($params["id"]);
+            $this->respondsWith(200, "Carrinho aberto"); 
+        }catch(Exception $excepiton){
+            $this->respondsWith(500, "Carrinho não aberto"); 
+        }
+    }
+
+    public function close($params, $request){
+        try{
+            $cart = $this->service->closeCart($params["id"], $request["user_token"]);
+            $this->respondsWith(200, "Carrinho fechado"); 
+        }catch(Exception $excepiton){
+            $this->respondsWith(500, "Carrinho não fechado"); 
+        }
+    }
 }

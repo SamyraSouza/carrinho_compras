@@ -1,18 +1,22 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 use Exception;
-use Juninho\CarrinhosCompras\core\Database;
-use Juninho\CarrinhosCompras\Traits\HasFillableAttributes;
-use Juninho\CarrinhosCompras\Traits\HasId;
-use Juninho\CarrinhosCompras\Traits\HasTables;
+use App\core\Database;
+use App\Traits\CanConvertToArray;
+use App\Traits\HasAttributesSecurity;
+use App\Traits\HasFillableAttributes;
+use App\Traits\HasId;
+use App\Traits\HasTables;
 
 class Model
 {
+    use CanConvertToArray;
     use HasFillableAttributes;
     use HasTables;
     use HasId;
+    use HasAttributesSecurity;
     private $connection;
 
     public function initConnection()
@@ -24,7 +28,6 @@ class Model
     private function insert($table, $columns, $values)
     {
         $query = ('insert into ' . $table . ' (' . implode(",", $columns) . ') values (' . implode(",", $values) . ')');
-
         $result = mysqli_query($this->connection->getConnection(), $query);
 
         return $result;

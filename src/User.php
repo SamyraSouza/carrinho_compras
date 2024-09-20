@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 class User extends Model
 {
@@ -13,6 +13,7 @@ class User extends Model
     protected $password;
     protected $table = 'user';
     protected $fillable = ["name", "birth_date", "address", "cpf", "email", "password"];
+    protected $accessible = ["name", "birth_date", "address", "cpf", "email", "password", 'id'];
     
     public function getId(){
         return $this->id;

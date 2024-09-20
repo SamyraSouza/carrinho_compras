@@ -1,11 +1,11 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\services;
+namespace App\services;
 
 use Exception;
-use Juninho\CarrinhosCompras\Cart;
-use Juninho\CarrinhosCompras\CartProducts;
-use Juninho\CarrinhosCompras\Products;
+use App\Cart;
+use App\CartProducts;
+use App\Products;
 
 class CartService
 {
@@ -37,15 +37,18 @@ class CartService
         $product->closeConnection();
     }
 
-    public function closeCart($id){
+    public function closeCart($id, $user_token){
         $cart = new Cart();
         $cart->initConnection();
         $cart->find($id);
         $cart->setStatus("Fechado");
         $closed = $cart->save();
+        $cart->closeConnection();
         if($closed){
             $service = new OrderService();
-            $service->updateOrderSituation($cart->getId());
+            $authService = new AuthService();
+            $user = $authService->getUserByToken($user_token);
+            $service->updateOrderSituation($cart->getId(), $user->getId());
         }else{
             throw new Exception("Erro ao fechar carrinho");
         }

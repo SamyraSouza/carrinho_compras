@@ -2,16 +2,17 @@
     "name": "juninho/carrinhos_compras",
     "autoload": {
         "psr-4": {
-            "Juninho\\CarrinhosCompras\\": "src/"
+            "App\\": "src/"
         }
     },
     "authors": [
         {
-            "name": "Patrick",
-            "email": "patrick.grilanda26@gmail.com"
+            "name": "Samyra",
+            "email": "samyragrilanda@gmail.com"
         }
     ],
     "require": {
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "guzzlehttp/guzzle": "^7.9"
     }
 }

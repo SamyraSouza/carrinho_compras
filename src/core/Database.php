@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\core;
+namespace App\core;
 
 use FTP\Connection;
 use mysqli;

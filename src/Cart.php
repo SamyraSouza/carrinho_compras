@@ -1,7 +1,7 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
-use Juninho\CarrinhosCompras\Products;
+namespace App;
+use App\Products;
 
 class Cart extends Model
 {
@@ -9,6 +9,7 @@ class Cart extends Model
     protected $status = "Aberto";
     protected $table = "cart";
     protected $fillable = ["status"];
+    protected $accessible = ["products", 'status', 'id'];
     
     public function getProducts(){
         return $this->products;

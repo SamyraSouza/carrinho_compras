@@ -1,22 +1,25 @@
 <?php
 
 use FastRoute\RouteCollector;
-use Juninho\CarrinhosCompras\http\Controllers\AuthController;
-use Juninho\CarrinhosCompras\http\Controllers\CartController;
-use Juninho\CarrinhosCompras\http\Controllers\ProductController;
+use App\http\Controllers\AuthController;
+use App\http\Controllers\CartController;
+use App\http\Controllers\ProductController;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
- 
-    $r->addRoute('POST', '/carrinho_compras/api/login', [AuthController::class, 'login']);
-    $r->addRoute('POST', '/carrinho_compras/api/register', [AuthController::class, 'register']);
-    $r->addRoute('GET', '/carrinho_compras/api/user/{id}', [AuthController::class, 'show']);
 
-    $r->addRoute('POST', '/carrinho_compras/api/product/create', [ProductController::class, 'create']);
-    $r->addRoute('POST', '/carrinho_compras/api/product/{id}', [ProductController::class, 'update']);
+    $r->addRoute('POST', '/carrinho_compras/api/login', [AuthController::class, ['method' => 'login', 'protected' => false]]);
+    $r->addRoute('POST', '/carrinho_compras/api/register', [AuthController::class, ['method' => 'register', 'protected' => false]]);
+    $r->addRoute('GET', '/carrinho_compras/api/user', [AuthController::class, ['method' => 'show', 'protected' => true]]);
 
-    $r->addRoute('POST', '/carrinho_compras/api/cart/product/add', [CartController::class, 'addProduct']);
-    $r->addRoute('GET', '/carrinho_compras/api/cart/{id}', [CartController::class, 'getCart']);
-    $r->addRoute('GET', '/carrinho_compras/api/carts', [CartController::class, 'getCarts']);
+    $r->addRoute('POST', '/carrinho_compras/api/product/create', [ProductController::class, ['method' => 'create', 'protected' => true]]);
+    $r->addRoute('GET', '/carrinho_compras/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
+    $r->addRoute('POST', '/carrinho_compras/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
+
+    $r->addRoute('POST', '/carrinho_compras/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
+    $r->addRoute('GET', '/carrinho_compras/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
+    $r->addRoute('GET', '/carrinho_compras/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
+    $r->addRoute('POST', '/carrinho_compras/api/cart/open/{id}', [CartController::class, ['method' => 'open', 'protected' => true]]);
+    $r->addRoute('POST', '/carrinho_compras/api/cart/close/{id}', [CartController::class, ['method' => 'close', 'protected' => true]]);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
@@ -42,9 +45,19 @@ switch ($routeInfo[0]) {
         $requestData = ($httpMethod === 'POST') ? $_POST : $_GET;
 
         if (is_array($handler) && count($handler) == 2) {
-            $controller = new $handler[0]();  
-            $method = $handler[1];
+            $controller = new $handler[0]();
+            $method = $handler[1]['method'];
+            $protected = $handler[1]['protected'];
+            $headers = getallheaders();
 
+            if ($protected && !isset($headers['Authorization'])) {
+                echo json_encode(['status' => 'error', 'message' => 'Não autorizado']);
+                exit();
+            }
+            if (isset($headers["Authorization"])) {
+                $token = explode(" ", $headers["Authorization"]);
+                $requestData["user_token"] = $token[1];
+            }
             call_user_func_array([$controller, $method], [$vars, $requestData]);
         } else {
             call_user_func_array($handler, [$vars]);

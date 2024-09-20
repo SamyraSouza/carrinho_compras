@@ -1,14 +1,15 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 class Order extends Model
 {
     protected $cart_id = 0;
     protected $total = 0;
-    protected $user = "";
+    protected $user_id= "";
     protected $table = "sales_order";
-    protected $fillable = ["cart_id", "total"];
+    protected $fillable = ["cart_id", "total", 'user_id'];
+    protected $accessible = ['cart_id', 'total', 'user_id', 'id'];
 
     
     public function getCart(){
@@ -18,7 +19,7 @@ class Order extends Model
         return $this->total;
     }
     public function getUser(){
-        return $this->user;
+        return $this->user_id;
     }
     public function setCart($cart_id){
         $this->cart_id = $cart_id;
@@ -26,7 +27,7 @@ class Order extends Model
     public function setValue($total){
         $this->total = $total;
     }
-    public function setUser($user){
-        $this->user = $user;
+    public function setUser($user_id){
+        $this->user_id = $user_id;
     }
 }

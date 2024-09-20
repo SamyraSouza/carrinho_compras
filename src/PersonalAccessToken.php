@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 class PersonalAccessToken extends Model
 {
@@ -10,6 +10,7 @@ class PersonalAccessToken extends Model
     protected $created_at;
     protected $table = 'personal_access_token';
     protected $fillable = ["token", "user_id", "expired_at"];
+    protected $accessible = ["token", "user_id", "expired_at", 'id'];
 
     public function getToken(){
         return $this->token;

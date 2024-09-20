@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 class Products extends Model
 {
@@ -9,6 +9,7 @@ class Products extends Model
     protected $price = 0;
     protected $table = 'products';
     protected $fillable = ['name', 'description', 'price'];
+    protected $accessible = ['name', 'description', 'price', 'id'];
 
 
    public function getname(){

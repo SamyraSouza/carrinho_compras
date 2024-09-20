@@ -1,9 +1,9 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\services;
+namespace App\services;
 
 use Exception;
-use Juninho\CarrinhosCompras\PersonalAccessToken;
+use App\PersonalAccessToken;
 
 class PersonalAccessTokenService
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\http\Controllers;
+namespace App\http\Controllers;
 
 use Exception;
-use Juninho\CarrinhosCompras\services\ProductService;
+use App\services\ProductService;
 
-class ProductController
+class ProductController extends Controller
 {
     protected $service;
 
@@ -16,27 +16,27 @@ class ProductController
     public function create($params, $request){
         try{
             $product = $this->service->make($request["name"], $request["description"], $request["price"]);
-            echo "Produto salvo com sucesso!";
+            $this->respondsWith(200, "Produto criado"); 
         }catch(Exception $exception){
-            echo $exception->getMessage();
+            $this->respondsWith(400, "Produto não criado"); 
         }
     }
 
     public function list(){
         try{
             $products = $this->service->read();
-            echo json_encode($products);
+            $this->respondsWith(200, "Produtos encontrados", ["products" => $products]); 
         }catch(Exception $exception){
-            echo $exception->getMessage();
+            $this->respondsWith(404, "Produtos não encontrados"); 
         }
     }
 
     public function update($params, $request){
         try{
             $product = $this->service->update($params["id"], $request);
-            echo "Produto atualizado com sucesso!";
+            $this->respondsWith(200, "Produto atualizado"); 
         }catch(Exception $exception){
-            echo $exception->getMessage();
+            $this->respondsWith(400, "Produto não atualizado"); 
         }
     }
 }

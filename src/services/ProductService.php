@@ -1,8 +1,8 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\services;
+namespace App\services;
 
-use Juninho\CarrinhosCompras\Products;
+use App\Products;
 
 class ProductService
 {

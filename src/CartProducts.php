@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras;
+namespace App;
 
 class CartProducts extends Model
 {
@@ -9,6 +9,7 @@ class CartProducts extends Model
     protected $id;
     protected $fillable = ['cart_id', 'product_id'];
     protected $table = "cart_products";
+    protected $accessible = ['cart_id', 'product_id', 'id'];
 
     public function getCartId(){
         return $this->cart_id;

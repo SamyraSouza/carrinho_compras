@@ -1,12 +1,12 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\services;
+namespace App\services;
 
 use Exception;
-use Juninho\CarrinhosCompras\PersonalAccessToken;
-use Juninho\CarrinhosCompras\User;
+use App\PersonalAccessToken;
+use App\User;
 
-class AuthService
+class AuthService 
 {
     public function register($name, $birth_date, $address, $cpf, $email, $password){
 
@@ -57,5 +57,17 @@ class AuthService
             throw new Exception("Não autorizado");
         }
         $user->closeConnection();
+    }
+
+    public function getUserByToken($token){
+        $access = new PersonalAccessToken();
+        $access->initConnection();
+        $result = $access->where(["token" => $token]);
+        $user_id = $result[0]['user_id'];
+        $user = new User();
+        $user->initConnection();
+        $user->find($user_id);
+        $user->closeConnection();
+        return $user;
     }
 }

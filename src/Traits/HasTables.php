@@ -1,6 +1,6 @@
 <?php
 
-namespace Juninho\CarrinhosCompras\Traits;
+namespace App\Traits;
 
 trait HasTables
 {
