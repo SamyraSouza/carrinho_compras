@@ -13,7 +13,7 @@ class User extends Model
     protected $password;
     protected $table = 'user';
     protected $fillable = ["name", "birth_date", "address", "cpf", "email", "password"];
-    protected $accessible = ["name", "birth_date", "address", "cpf", "email", "password", 'id'];
+    protected $accessible = ["name", "birth_date", "address", "cpf", "email", 'id'];
     
     public function getId(){
         return $this->id;

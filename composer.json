@@ -13,6 +13,8 @@
     ],
     "require": {
         "nikic/fast-route": "^1.3",
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.9",
+        "ramsey/uuid": "^4.7",
+        "nesbot/carbon": "^3.8"
     }
 }

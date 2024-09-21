@@ -56,7 +56,9 @@ class Model
         }, $columns);
 
         if (!$this->id()) {
-            return $this->insert($table, $columns, $values);
+           $inserted = $this->insert($table, $columns, $values);
+           $result = $this->last();
+           return $inserted;
         } else {
             return $this->update($table, $columns, $values);
         }

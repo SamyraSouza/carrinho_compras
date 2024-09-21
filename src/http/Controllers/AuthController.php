@@ -2,8 +2,10 @@
 
 namespace App\http\Controllers;
 
+use App\PersonalAccessToken;
 use Exception;
 use App\services\AuthService;
+use App\services\PersonalAccessTokenService;
 use App\services\UserService;
 
 class AuthController extends Controller
@@ -32,16 +34,17 @@ class AuthController extends Controller
     public function register($params, $request){
         try{
             $user = $this->service->register($request["name"], $request["birth_date"], $request["address"], $request["cpf"], $request["email"], $request["password"]);
-            $this->respondsWith(201, "Usuário salvo com sucesso"); 
+            $this->respondsWith(201, "Usuário salvo com sucesso", ["Data" => $user->toArray() ]); 
         }catch(Exception $exception){
             $this->respondsWith(400, "Não foi possível registrar o usuário"); 
         }
     }
 
-    public function show(){
+    public function show($params, $request){
         try{
-            // $user = $this->service_user->read($id["id"]);
-            $this->respondsWith(200, "Dados do usuário localizados", getallheaders()); 
+            $access = new AuthService();
+            $user = $access->getUserByToken($request["user_token"]);
+            $this->respondsWith(200, "Dados do usuário localizados", ["user"=>$user->toArray()]); 
 
    
         }catch(Exception $exception){

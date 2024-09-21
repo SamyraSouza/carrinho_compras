@@ -16,7 +16,7 @@ class ProductController extends Controller
     public function create($params, $request){
         try{
             $product = $this->service->make($request["name"], $request["description"], $request["price"]);
-            $this->respondsWith(200, "Produto criado"); 
+            $this->respondsWith(200, "Produto criado", $product->toArray()); 
         }catch(Exception $exception){
             $this->respondsWith(400, "Produto não criado"); 
         }
@@ -34,7 +34,7 @@ class ProductController extends Controller
     public function update($params, $request){
         try{
             $product = $this->service->update($params["id"], $request);
-            $this->respondsWith(200, "Produto atualizado"); 
+            $this->respondsWith(200, "Produto atualizado", $product->toArray()); 
         }catch(Exception $exception){
             $this->respondsWith(400, "Produto não atualizado"); 
         }

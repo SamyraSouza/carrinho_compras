@@ -5,6 +5,7 @@ namespace App\services;
 use Exception;
 use App\PersonalAccessToken;
 use App\User;
+use Carbon\Carbon;
 
 class AuthService 
 {
@@ -25,9 +26,13 @@ class AuthService
         $user->setEmail($email);
         $user->setPassword($password);
         $saved = $user->save();
+        if(!$saved){
+            throw new Exception("Não foi possível salvar seu usuário.");
+        }
         $user->closeConnection();
-        return $saved;
+        return $user;
     }
+
 
     public function verifyEmail($email){
         $user = new User();
@@ -51,7 +56,7 @@ class AuthService
         $verified = password_verify($password, $password_login);
         if($verified){
             $access = new PersonalAccessTokenService();
-           return $access->create($user_login[0]["id"], $user_login[0]["email"]);          
+           return $access->create($user_login[0]["id"]);          
         }
         else{
             throw new Exception("Não autorizado");
@@ -69,5 +74,17 @@ class AuthService
         $user->find($user_id);
         $user->closeConnection();
         return $user;
+    }
+
+    public function verifyTokenValidated($token){
+        $access = new PersonalAccessToken();
+        $access->initConnection();
+        $result = $access->where(["token" => $token]);
+        $result_date = Carbon::createFromFormat('Y-m-d H:i:s',  $result[0]["expired_at"]);
+        if($result_date < Carbon::now()){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

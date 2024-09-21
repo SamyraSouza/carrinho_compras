@@ -4,6 +4,7 @@ use FastRoute\RouteCollector;
 use App\http\Controllers\AuthController;
 use App\http\Controllers\CartController;
 use App\http\Controllers\ProductController;
+use App\services\AuthService;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
@@ -57,6 +58,13 @@ switch ($routeInfo[0]) {
             if (isset($headers["Authorization"])) {
                 $token = explode(" ", $headers["Authorization"]);
                 $requestData["user_token"] = $token[1];
+                $verify = new AuthService();
+                $validated = $verify->verifyTokenValidated($requestData["user_token"]);
+
+                if(!$validated){
+                    echo json_encode(['status' => 'error', 'message' => 'Não autorizado']);
+                    exit();
+                }
             }
             call_user_func_array([$controller, $method], [$vars, $requestData]);
         } else {

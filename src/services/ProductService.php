@@ -54,5 +54,6 @@ class ProductService
         }
         $product->save();
         $product->closeConnection();
+        return $product;
     }
 }
