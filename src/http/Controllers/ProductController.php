@@ -39,4 +39,13 @@ class ProductController extends Controller
             $this->respondsWith(400, "Produto não atualizado"); 
         }
     }
+
+    public function delete($params, $request){
+        try{
+            $product = $this->service->deletes($params["id"]);
+            $this->respondsWith(200, "Produto deletado"); 
+        }catch(Exception $exception){
+            $this->respondsWith(400, "Não foi possível deletar"); 
+        }
+    }
 }

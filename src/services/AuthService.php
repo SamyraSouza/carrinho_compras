@@ -87,4 +87,18 @@ class AuthService
             return true;
         }
     }
+
+    public function deleteOldTokens($user_id){
+        $delete_tokens =  [];
+        $tokens = new PersonalAccessToken();
+        $tokens->initConnection();
+        $results = $tokens->where(["user_id" => $user_id]);
+        $tokens->closeConnection();
+        foreach ($results as $delete_tokens) {
+            $token = new PersonalAccessToken();
+            $token->initConnection();
+            $token->find($delete_tokens["id"]);
+            $token->delete();
+        }
+    }
 }

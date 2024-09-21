@@ -2,6 +2,7 @@
 
 namespace App\services;
 
+use App\http\Controllers\AuthController;
 use Exception;
 use App\PersonalAccessToken;
 use Carbon\Carbon;
@@ -10,6 +11,8 @@ use Ramsey\Uuid\Uuid;
 class PersonalAccessTokenService
 {
     public function create($user_id){
+        $tokens_user = new AuthService();
+        $tokens_user->deleteOldTokens($user_id);
         $token = Uuid::uuid4();
         $access_token = new PersonalAccessToken();
         $access_token->initConnection();
@@ -30,4 +33,6 @@ class PersonalAccessTokenService
     protected function getExpiredAt(){
         return Carbon::now()->add(120,"minute");
     }
+
+    
 }
