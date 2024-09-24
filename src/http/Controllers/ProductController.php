@@ -22,9 +22,12 @@ class ProductController extends Controller
         }
     }
 
-    public function list(){
+    public function list($params, $request){
+       
+        unset($request["user_token"]);
+
         try{
-            $products = $this->service->read();
+            $products = $this->service->read($request);
             $this->respondsWith(200, "Produtos encontrados", ["products" => $products]); 
         }catch(Exception $exception){
             $this->respondsWith(404, "Produtos não encontrados"); 

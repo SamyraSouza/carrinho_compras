@@ -104,7 +104,7 @@ class Model
         return $result ? true : false;
     }
 
-    public function where($params = [])
+    public function where($params = [], $conditions = " and ")
     {
         if (!$this->connection instanceof Database) throw new Exception("Inicie a conexão com o banco de dados");
         $model = $this;
@@ -117,11 +117,38 @@ class Model
             foreach ($params as $key => $value) {
                 $query_params[] = $key . " = " . "'" . $value . "'";
             }
-            $conditions = implode(" and ", $query_params);
+            $conditions = implode( $conditions, $query_params);
 
             $query_string = $query_string . $conditions;
+
         }
 
+        $result = mysqli_query($this->connection->getConnection(), $query_string);
+        $data = [];
+        
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+        return $data;
+    }
+
+    public function whereLike($params = [], $conditions = " and "){
+        if (!$this->connection instanceof Database) throw new Exception("Inicie a conexão com o banco de dados");
+        $model = $this;
+        $table = $model->getTable();
+        $query_string = ("select * from " . $table . " ");
+        $query_params = [];
+
+        if (!empty($params)) {
+            $query_string .= " where ";
+            foreach ($params as $key => $value) {
+                $query_params[] = $key . " like " . "'%" . $value . "%'";
+            }
+            $conditions = implode( $conditions, $query_params);
+
+            $query_string = $query_string . $conditions;
+          
+        }
         $result = mysqli_query($this->connection->getConnection(), $query_string);
         $data = [];
         
