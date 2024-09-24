@@ -27,7 +27,7 @@ class AuthController extends Controller
                 throw new Exception("Sem token");
             }
         }catch(Exception $exception){
-            $this->respondsWith(401, "Não Autenticado"); 
+            $this->respondsWith(401, $exception->getMessage()); 
         }
     }
 
