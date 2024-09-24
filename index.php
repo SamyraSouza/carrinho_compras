@@ -6,3 +6,4 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 require './vendor/autoload.php';
 include './src/routes/api.php';
+include './src/routes/web.php';

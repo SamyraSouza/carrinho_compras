@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho Compras API</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- As a link -->
+    <nav class="navbar bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="/carrinho_compras/">Carrinho Compras</a>
+        </div>
+    </nav>
+
+    <main class="container-fluid d-flex align-items-center justify-content-center p-2 gap-2 flex-column">
+        <h1>Documentação da API</h1>
+        <p class="alert alert-warning">
+            Ao realizar a requisição para os endpoints abaixo citados, é importante verificar se o mesmo necessita de autenticação, Caso seja exigido a autenticação não esqueça de passar no cabeçalho da requisição 
+            o atributo <b>Authorization</b>: TOKEN_API.
+        </p>
+        <hr>
+        <h5>Lista de Endpoints disponíveis</h5>
+        <table class="table table-bordered table-hovered table-striped">
+            <thead>
+                <tr>
+                    <th>Método HTTP</th>
+                    <th>Endpoint</th>
+                    <th>Requer Autenticação</th>
+                    <th>Descrição</th>
+                    <th>Parâmetros</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-id="login" data-title="Login" data-params='{
+                    "email": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Email do usuário"
+                    },
+                    "password": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Senha do usuário"
+                    }
+                }' data-description="Este endpoint tem como objetivo realizar a autenticação do usuário pela API, após enviar a requisição, caso autenticado, você receberá um token de autenticação.">
+                    <td>POST</td>
+                    <td>/api/login</td>
+                    <td>false</td>
+                    <td>Requisição para autenticar na plataforma</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#login">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr data-id="register" data-title="Registrar" data-params='{
+                    "email": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Email do usuário"
+                    },
+                    "password": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Senha do usuário"
+                    },
+                    "name": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Nome do usuário"
+                    },
+                    "birth_date": {
+                        "type": "Date",
+                        "required": true,
+                        "description": "Data de nascimento"
+                    }
+                }'>
+                    <td>POST</td>
+                    <td>/api/register</td>
+                    <td>false</td>
+                    <td>Requisição para se registrar na plataforma</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#register">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/api/user</td>
+                    <td>true</td>
+                    <td>Requisição para obter o usuário autenticado</td>
+                    <td>N/A</td>
+                </tr>
+                <tr data-id="products-create" data-title="Cadastrar Produto" data-params='{
+                    "name": {
+                        "type": "String",
+                        "required": true,
+                        "description": "Nome do produto"
+                    },
+                    "price": {
+                        "type": "Float",
+                        "required": true,
+                        "description": "Preço do produto"
+                    },
+                    "description": {
+                        "type": "String",
+                        "required": false,
+                        "description": "Descrição do produto"
+                    }
+                }'>
+                    <td>POST</td>
+                    <td>/api/products/create</td>
+                    <td>true</td>
+                    <td>Cadastra um novo produto na plataforma</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#products-create">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/api/products</td>
+                    <td>true</td>
+                    <td>Obter os produtos da plataforma</td>
+                    <td>N/A</td>
+                </tr>
+                <tr data-id="products-update" data-title="Atualizar Produto" data-params='{
+                    "id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do produto"
+                    },
+                    "name": {
+                        "type": "String",
+                        "required": false,
+                        "description": "Nome do produto"
+                    },
+                    "price": {
+                        "type": "Float",
+                        "required": false,
+                        "description": "Preço do produto"
+                    },
+                    "description": {
+                        "type": "String",
+                        "required": false,
+                        "description": "Descrição do produto"
+                    }
+                }'>
+                    <td>POST</td>
+                    <td>/api/product/update/{id}</td>
+                    <td>true</td>
+                    <td>Atualiza um produto na plataforma</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#products-update">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr data-id="products-delete" data-title="Deletar um Produto" data-params='{
+                    "id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do produto"
+                    }
+                }'>
+                    <td>GET</td>
+                    <td>/api/product/delete/{id}</td>
+                    <td>true</td>
+                    <td>Exclui um produto da plataforma</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#products-delete">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr data-id="cart-products-add" data-title="Adicionar um produto ao carrinho" data-params='{
+                    "product_id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do produto"
+                    },
+                    "cart_id": {
+                        "type": "Integer",
+                        "required": false,
+                        "description": "Id do carrinho"
+                    }
+                }' data-description="Este endpoint adiciona um produto a um carrinho, caso não seja passado o id do carrinho, um novo será criado.">
+                    <td>POST</td>
+                    <td>/carrinho_compras/api/cart/product/add</td>
+                    <td>true</td>
+                    <td>Adiciona um produto ao carrinho</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart-products-add">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr data-id="cart-get" data-title="Obter um carrinho" data-params='{
+                    "id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do carrinho"
+                    }
+                }' data-description="Este endpoint tem por objetivo retornar um carrinho para o usuário junto aos seus produtos.">
+                    <td>GET</td>
+                    <td>/api/cart/{id}</td>
+                    <td>true</td>
+                    <td>Obtém os detalhes de um carrinho específico</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart-get">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>GET</td>
+                    <td>/api/carts</td>
+                    <td>true</td>
+                    <td>Obtém todos os carrinhos de compras do usuário</td>
+                    <td>N/A</td>
+                </tr>
+                <tr data-id="cart-open" data-title="Abrir um carrinho" data-params='{
+                    "id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do carrinho"
+                    }
+                }' data-description="Este endpoint tem por objetivo realizar a abertura de um carrinho.">
+                    <td>POST</td>
+                    <td>/api/cart/open/{id}</td>
+                    <td>true</td>
+                    <td>Abre um carrinho de compras específico</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart-open">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+                <tr data-id="cart-close" data-title="Abrir um carrinho" data-params='{
+                    "id": {
+                        "type": "Integer",
+                        "required": true,
+                        "description": "Id do carrinho"
+                    }
+                }' data-description="Este endpoint tem por objetivo realizar o fechamento de um carrinho, ao fechar, caso não haja um pedido em aberto, este será criado pelo sistema.">
+                    <td>POST</td>
+                    <td>/api/cart/close/{id}</td>
+                    <td>true</td>
+                    <td>Fecha um carrinho de compras específico</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart-close">
+                            Verificar Parâmetros
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <div class="bg-primary">
+        <footer class="py-3 my-4 container">
+            <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                <li class="nav-item"><a href="/carrinho_compras/" class="nav-link px-2 text-white">Home</a></li>
+                <li class="nav-item"><a href="/carrinho_compras/contact" class="nav-link px-2 text-white">Contato</a></li>
+                <li class="nav-item"><a href="/carrinho_compras/docs" class="nav-link px-2 text-white">Documentação</a></li>
+                <li class="nav-item"><a target="__blank" href="https://github.com/SamyraSouza/carrinho_compras" class="nav-link px-2 text-white">Github do Projeto</a></li>
+            </ul>
+            <p class="text-center text-white">© 2024 Company, Inc</p>
+        </footer>
+    </div>
+    <!-- Button trigger modal -->
+
+    <!-- Modal -->
+    <div class="modal fade" data-modal tabindex="-1" aria-labelledby="modal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modal-title">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="modal-description"></p>
+                    <table id="modal-table" class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Parâmetro</th>
+                                <th>Tipo</th>
+                                <th>Obrigatório</th>
+                                <th>Descrição</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
+    <script>
+        let modal = document.querySelector('[data-modal]')
+
+        document.querySelectorAll('tr').forEach((tr) => {
+            if (tr.hasAttribute('data-id')) {
+                tr.addEventListener('mouseover', function (event) {
+                    let tr = event.target.closest('tr');
+                    let id = tr.getAttribute('data-id');
+                    let title = tr.getAttribute('data-title');
+                    let description = tr.getAttribute('data-description');
+                    let params = tr.getAttribute('data-params');
+
+                    let paramsObject = params ? JSON.parse(params) : null;
+
+                    modal.setAttribute('id', `${id}`);
+                    modal.querySelector('#modal-title').innerHTML = title;
+                    modal.querySelector('#modal-description').innerHTML = description;
+
+                    if (paramsObject) {
+                        const table = modal.querySelector('#modal-table');
+                        const tbody = table.querySelector('tbody');
+
+                        tbody.innerHTML = '';
+
+                        for(let param in paramsObject) {
+                            let tr = document.createElement('tr');
+
+                            const paramValue = paramsObject[param];
+
+                            tr.innerHTML = `
+                                <td>${param}</td>
+                                <td>${paramValue.type}</td>
+                                <td>${paramValue.required}</td>
+                                <td>${paramValue.description}</td>
+                            `;
+
+                            tbody.appendChild(tr);
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

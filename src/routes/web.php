@@ -1,37 +1,33 @@
-<?php
+<?php 
 
 use FastRoute\RouteCollector;
-use App\http\Controllers\AuthController;
-use App\http\Controllers\CartController;
-use App\http\Controllers\ProductController;
 use App\services\AuthService;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
+    $r->addRoute('GET', '/carrinho_compras/', function () {
+        include './resources/views/home.html';
+        exit();
+    });
 
-    $r->addRoute('POST', '/carrinho_compras/api/login', [AuthController::class, ['method' => 'login', 'protected' => false]]);
-    $r->addRoute('POST', '/carrinho_compras/api/register', [AuthController::class, ['method' => 'register', 'protected' => false]]);
-    $r->addRoute('GET', '/carrinho_compras/api/user', [AuthController::class, ['method' => 'show', 'protected' => true]]);
+    $r->addRoute('GET', '/carrinho_compras/docs', function () {
+        include './resources/views/docs.html';
+        exit();
+    });
 
-    $r->addRoute('POST', '/carrinho_compras/api/product/create', [ProductController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/product/delete/{id}', [ProductController::class, ['method' => 'delete', 'protected' => true]]);
-    
-    $r->addRoute('POST', '/carrinho_compras/api/cart/create', [CartController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/open/{id}', [CartController::class, ['method' => 'open', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/close/{id}', [CartController::class, ['method' => 'close', 'protected' => true]]);
+    $r->addRoute('GET', '/carrinho_compras/contact', function () {
+        include './resources/views/contact.html';
+        exit();
+    });
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-if(strpos($uri, '/api/')) {
+if(!strpos($uri, '/api/')) {
     if (false !== $pos = strpos($uri, '?')) {
         $uri = substr($uri, 0, $pos);
     }
+
     $uri = rawurldecode($uri);
     
     $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
