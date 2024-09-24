@@ -4,5 +4,8 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET");
 
 require './vendor/autoload.php';
+
+print_r((new App\User())->all());
+
 include './src/routes/api.php';
 include './src/routes/web.php';
