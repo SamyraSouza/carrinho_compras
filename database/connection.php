@@ -1,10 +1,10 @@
 <?php
 
 try{
-    $hostname = "localhost";
-    $database = "cart";
-    $username = "root";
-    $password = "";
+    $hostname = "us-cluster-east-01.k8s.cleardb.net";
+    $database = "heroku_43a832b78e5afea";
+    $username = "bb382738f2554e";
+    $password = "e233fd5f";
 
     $mysqli = new mysqli($hostname,$username,$password,$database);
 
