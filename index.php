@@ -6,7 +6,10 @@ header("Access-Control-Allow-Methods: POST, GET");
 require './vendor/autoload.php';
 
 try {
-print_r((new App\User())->all());
+$user = new App\User();
+$user->initConnection();
+print_r($user->all());
+$user->closeConnection();
 } catch (\Exception $e) {
   echo $e->getMessage();
 }
