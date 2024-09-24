@@ -23,7 +23,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-if(!strpos($uri, '/api/')) {
+if(!strpos($uri, 'api/')) {
     if (false !== $pos = strpos($uri, '?')) {
         $uri = substr($uri, 0, $pos);
     }
