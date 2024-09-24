@@ -8,21 +8,21 @@ use App\services\AuthService;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
 
-    $r->addRoute('POST', '/carrinho_compras/api/login', [AuthController::class, ['method' => 'login', 'protected' => false]]);
-    $r->addRoute('POST', '/carrinho_compras/api/register', [AuthController::class, ['method' => 'register', 'protected' => false]]);
-    $r->addRoute('GET', '/carrinho_compras/api/user', [AuthController::class, ['method' => 'show', 'protected' => true]]);
+    $r->addRoute('POST', '/api/login', [AuthController::class, ['method' => 'login', 'protected' => false]]);
+    $r->addRoute('POST', '/api/register', [AuthController::class, ['method' => 'register', 'protected' => false]]);
+    $r->addRoute('GET', '/api/user', [AuthController::class, ['method' => 'show', 'protected' => true]]);
 
-    $r->addRoute('POST', '/carrinho_compras/api/product/create', [ProductController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/product/delete/{id}', [ProductController::class, ['method' => 'delete', 'protected' => true]]);
+    $r->addRoute('POST', '/api/product/create', [ProductController::class, ['method' => 'create', 'protected' => true]]);
+    $r->addRoute('GET', '/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
+    $r->addRoute('POST', '/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
+    $r->addRoute('GET', '/api/product/delete/{id}', [ProductController::class, ['method' => 'delete', 'protected' => true]]);
     
-    $r->addRoute('POST', '/carrinho_compras/api/cart/create', [CartController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
-    $r->addRoute('GET', '/carrinho_compras/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/open/{id}', [CartController::class, ['method' => 'open', 'protected' => true]]);
-    $r->addRoute('POST', '/carrinho_compras/api/cart/close/{id}', [CartController::class, ['method' => 'close', 'protected' => true]]);
+    $r->addRoute('POST', '/api/cart/create', [CartController::class, ['method' => 'create', 'protected' => true]]);
+    $r->addRoute('POST', '/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
+    $r->addRoute('GET', '/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
+    $r->addRoute('GET', '/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
+    $r->addRoute('POST', '/api/cart/open/{id}', [CartController::class, ['method' => 'open', 'protected' => true]]);
+    $r->addRoute('POST', '/api/cart/close/{id}', [CartController::class, ['method' => 'close', 'protected' => true]]);
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];

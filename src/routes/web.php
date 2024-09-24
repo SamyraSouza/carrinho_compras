@@ -4,17 +4,17 @@ use FastRoute\RouteCollector;
 use App\services\AuthService;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
-    $r->addRoute('GET', '/carrinho_compras/', function () {
+    $r->addRoute('GET', '/', function () {
         include './resources/views/home.html';
         exit();
     });
 
-    $r->addRoute('GET', '/carrinho_compras/docs', function () {
+    $r->addRoute('GET', '/docs', function () {
         include './resources/views/docs.html';
         exit();
     });
 
-    $r->addRoute('GET', '/carrinho_compras/contact', function () {
+    $r->addRoute('GET', '/contact', function () {
         include './resources/views/contact.html';
         exit();
     });
