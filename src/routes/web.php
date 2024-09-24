@@ -1,37 +1,33 @@
-<?php
+<?php 
 
 use FastRoute\RouteCollector;
-use App\http\Controllers\AuthController;
-use App\http\Controllers\CartController;
-use App\http\Controllers\ProductController;
 use App\services\AuthService;
 
 $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
+    $r->addRoute('GET', '/', function () {
+        include './resources/views/home.html';
+        exit();
+    });
 
-    $r->addRoute('POST', '/api/login', [AuthController::class, ['method' => 'login', 'protected' => false]]);
-    $r->addRoute('POST', '/api/register', [AuthController::class, ['method' => 'register', 'protected' => false]]);
-    $r->addRoute('GET', '/api/user', [AuthController::class, ['method' => 'show', 'protected' => true]]);
+    $r->addRoute('GET', '/docs', function () {
+        include './resources/views/docs.html';
+        exit();
+    });
 
-    $r->addRoute('POST', '/api/product/create', [ProductController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('GET', '/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
-    $r->addRoute('POST', '/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
-    $r->addRoute('GET', '/api/product/delete/{id}', [ProductController::class, ['method' => 'delete', 'protected' => true]]);
-    
-    $r->addRoute('POST', '/api/cart/create', [CartController::class, ['method' => 'create', 'protected' => true]]);
-    $r->addRoute('POST', '/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
-    $r->addRoute('GET', '/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
-    $r->addRoute('GET', '/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
-    $r->addRoute('POST', '/api/cart/open/{id}', [CartController::class, ['method' => 'open', 'protected' => true]]);
-    $r->addRoute('POST', '/api/cart/close/{id}', [CartController::class, ['method' => 'close', 'protected' => true]]);
+    $r->addRoute('GET', '/contact', function () {
+        include './resources/views/contact.html';
+        exit();
+    });
 });
 
 $httpMethod = $_SERVER['REQUEST_METHOD'];
 $uri = $_SERVER['REQUEST_URI'];
 
-if(strpos($uri, '/api/')) {
+if(!strpos($uri, '/api/')) {
     if (false !== $pos = strpos($uri, '?')) {
         $uri = substr($uri, 0, $pos);
     }
+
     $uri = rawurldecode($uri);
     
     $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
