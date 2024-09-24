@@ -20,11 +20,11 @@ class ProductService
         return $product;
     }
 
-    public function read()
+    public function read($request)
     {
         $product = new Products();
         $product->initConnection();
-        $products = $product->all();
+        $products = $product->whereLike($request);
         $product->closeConnection();
         return $products;
     }

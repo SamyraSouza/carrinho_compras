@@ -33,9 +33,12 @@ class CartController extends Controller
         }
     }
 
-    public function getCarts($params){
+    public function getCarts($params, $request){
+
+        unset($request["user_token"]);
+
         try{
-            $carts = $this->service->read();
+            $carts = $this->service->read($request);
             $carts = array_map(function($cart){
                foreach($cart["products"] as $key => $product){
                 $cart["products"][$key] = $product->toArray();

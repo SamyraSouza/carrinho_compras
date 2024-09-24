@@ -9,6 +9,7 @@ use App\Products;
 
 class CartService
 {
+
     public function addProduct($product_id,$cart_id=null){
         if($cart_id){
             $cart_product =  new CartProducts();
@@ -71,15 +72,14 @@ class CartService
         return $cart;
     }
 
-    public function read(){
+    public function read($request){
         $carts =  new Cart();
         $carts->initConnection();
         $carts_with_products = [];
-        foreach ($carts->all() as $cart) {
+        foreach ($carts->whereLike($request) as $cart) {
             $products = $this->getProducts($cart["id"]);
             $cart["products"] = $products;
             $carts_with_products[] = $cart;
-        
         }
         $carts->closeConnection();
         return $carts_with_products;

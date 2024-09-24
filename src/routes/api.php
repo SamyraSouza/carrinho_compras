@@ -16,7 +16,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (RouteCollector $r) {
     $r->addRoute('GET', '/carrinho_compras/api/products', [ProductController::class, ['method' => 'list', 'protected' => true]]);
     $r->addRoute('POST', '/carrinho_compras/api/product/update/{id}', [ProductController::class, ['method' => 'update', 'protected' => true]]);
     $r->addRoute('GET', '/carrinho_compras/api/product/delete/{id}', [ProductController::class, ['method' => 'delete', 'protected' => true]]);
-
+    
+    $r->addRoute('POST', '/carrinho_compras/api/cart/create', [CartController::class, ['method' => 'create', 'protected' => true]]);
     $r->addRoute('POST', '/carrinho_compras/api/cart/product/add', [CartController::class, ['method' => 'addProduct', 'protected' => true]]);
     $r->addRoute('GET', '/carrinho_compras/api/cart/{id}', [CartController::class, ['method' => 'getCart', 'protected' => true]]);
     $r->addRoute('GET', '/carrinho_compras/api/carts', [CartController::class, ['method' => 'getCarts', 'protected' => true]]);
